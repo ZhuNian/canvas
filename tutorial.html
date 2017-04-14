@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>canvas</title>
+  <script>
+    function draw() {
+      var canvas = document.getElementById('canvas');
+      if (canvas.getContext) {
+        var c = canvas.getContext('2d');
+        c.fillStyle = 'blue';
+        c.fillRect(50, 50, 50, 50);
+
+        c.fillStyle = 'red';
+        c.strokeRect(55,55,25,25);
+      }
+    }
+  </script>
+</head>
+
+<body onload='draw()'>
+  <canvas id='canvas'>
+
+  </canvas>
+</body>
+
+</html>
