@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>solar system</title>
+  <script>
+    var sun = new Image();
+    var moon = new Image();
+    var earch = new Image();
+
+    sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
+    moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
+    earch.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
+
+    function init() {
+      var cvs = document.getElementById('canvas');
+      if(!cvs) {
+        return;
+      }
+
+      cvs.drawImage
+    }
+
+    function solar(timeStamp) {
+      window.requestAnimationFrame(solar);
+    }
+  </script>
+</head>
+
+<body onload="init()">
+  <canvas id="canvas">
+  </canvas>
+</body>
+
+</html>
