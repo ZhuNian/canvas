@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
 
 <head>
@@ -10,40 +10,25 @@
 <script>
   function init() {
     var cvs = document.getElementById('canvas').getContext('2d');
-    var angle = 0;
+    var ratio = 0;
 
     window.requestAnimationFrame(draw);
 
     function draw() {
-      if(angle >= -90) {
-        angle -= 1;
+      if(ratio < 1) {
+        ratio += 0.02;
       }
 
-      cvs.clearRect(0,0, 400, 400);
-
-      cvs.fillStyle = 'gray';
-      cvs.fillRect(0, 0 ,400, 400);
-
-      cvs.beginPath();
-      cvs.strokeStyle = 'red';
-      cvs.moveTo(200, 200);
-      cvs.lineTo(100, 100);
-      cvs.stroke();
+      cvs.clearRect(0, 0, 400, 400);
 
       cvs.save();
+      cvs.strokeStyle = 'blue';
+      cvs.lineWidth = 100;
       cvs.beginPath();
-      <!-- cvs.moveTo(200, 200); -->
-      ctx.translate(200, 200);
-      cvs.rotate(angle * Math.PI / 180);
-      cvs.lineTo(100, 100);
+      cvs.arc(200, 200, 50, Math.PI,  Math.PI + Math.PI * ratio);
+      cvs.stroke();
       cvs.restore();
-      cvs.stroke();
-
-      cvs.beginPath();
-      cvs.moveTo(100, 100);
-      cvs.lineTo(300, 100);
-      cvs.stroke();
-
+      
       window.requestAnimationFrame(draw);
     }
   }
