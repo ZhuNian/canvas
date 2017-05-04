@@ -6,28 +6,55 @@
   <meta name="viewport" content="width=device-width">
   <title>solar system</title>
   <script>
-    var sun = new Image();
-    var moon = new Image();
-    var earch = new Image();
-
-    sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
-    moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
-    earch.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
-
     function init() {
-      var cvs = document.getElementById('canvas');
+      var sun = new Image();
+      var moon = new Image();
+      var earth = new Image();
 
-      cvs.drawImage()
-    }
+      sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
+      moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
+      earth.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
 
-    function solar(timeStamp) {
+      var angle = 0;
+      var cvs = document.getElementById('canvas').getContext('2d');
+
       window.requestAnimationFrame(solar);
+
+      function solar(timeStamp) {
+        angle += 0.3;
+
+        cvs.clearRect(0, 0, 300, 300);
+
+        cvs.drawImage(sun, 0, 0, 300, 300);
+
+        cvs.save();
+        cvs.beginPath();
+        cvs.strokeStyle = 'blue';
+        cvs.arc(150, 150, 120, 0, Math.PI * 2);
+        cvs.stroke();
+        cvs.restore();
+
+        let degree = Math.PI / 180;
+        let x = 138 +  120 * Math.cos(angle * degree);
+        let y = 138 + 120 * Math.sin(angle * degree);
+
+
+        let t = new Date();
+        let mx = x + 12 +  25 * Math.cos(2 * Math.PI / 6 * t.getSeconds() + 2 * Math.PI / 6000 * t.getMilliseconds());
+        let my = y + 12 +  25 * Math.sin(2 * Math.PI / 6 * t.getSeconds() + 2 * Math.PI / 6000 * t.getMilliseconds());
+
+        cvs.drawImage(earth, x, y, 24, 24);
+        cvs.drawImage(moon, mx, my, 7, 7);
+
+        window.requestAnimationFrame(solar);
+      }
+
     }
   </script>
 </head>
 
 <body onload="init()">
-  <canvas id="canvas">
+  <canvas id="canvas" width="300" height="300" style="display:block;margin:0 auto">
   </canvas>
 </body>
 
