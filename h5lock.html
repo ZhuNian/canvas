@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>canvas</title>
+  <script>
+    function init() {
+      var convas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+
+      var startHandler = function(e) {
+        let pos = _inLock({
+          x: e.touches[0].pageX,
+          y: e.touches[0].pageY
+        });
+
+        if (pos && pos.length) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(pos.x + 45, pos.y);
+          ctx.restore();
+
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.fillStyle = '#FFB93B';
+          ctx.arc(pos[0], pos[1], 35, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+
+      var moveHandler = function(e) {
+        ctx.strokeStyle = '#FFB93B';
+        ctx.lineWidth = 4;
+        ctx.lineTo(e.touches[0].pageX, e.touches[0].pageY);
+        ctx.stroke();
+      }
+
+      var endHandler = function(e) {
+        let pos = _inLock(e.changedTouches[0].pageX, e.changedTouches[0].pageY);
+        if (pos && pos.length) {
+
+        }
+      }
+
+      canvas.addEventListener('touchstart', function(e) {
+        window.requestAnimationFrame(startHandler.bind(null, e));
+      });
+
+      canvas.addEventListener('touchmove', function(e) {
+        window.requestAnimationFrame(moveHandler.bind(null, e));
+      });
+
+      canvas.addEventListener('touchend', function(e) {
+        window.requestAnimationFrame(endHandler.bind(null, e));
+      });
+
+      var lockArr = [
+        [
+          [100, 100],
+          [250, 100],
+          [400, 100]
+        ],
+        [
+          [100, 250],
+          [250, 250],
+          [400, 250]
+        ],
+        [
+          [100, 400],
+          [250, 400],
+          [400, 400]
+        ]
+      ];
+
+
+      draw();
+
+      function draw() {
+        ctx.clearRect(0, 0, 500, 800);
+
+        ctx.save();
+        ctx.fillStyle = '#F3F3F5';
+        ctx.beginPath();
+        ctx.fillRect(0, 0, 500, 800);
+        ctx.restore();
+
+        ctx.save();
+        ctx.strokeStyle = '#FFB93B';
+        ctx.lineWidth = 3;
+        for (let i = 0; i < 3; ++i) {
+          for (let j = 0; j < 3; ++j) {
+            ctx.beginPath();
+            ctx.arc(lockArr[i][j][0], lockArr[i][j][1], 45, 0, 2 * Math.PI);
+            ctx.stroke();
+          }
+        }
+        ctx.restore();
+      }
+
+      function _inLock(e) {
+        let rs = null;
+        for (let i = 0; i < 3; ++i) {
+          for (let j = 0; j < 3; ++j) {
+            if (Math.abs(lockArr[i][j][0] - e.x) <= 30 && Math.abs(lockArr[i][j][1] - e.y) <= 30) {
+              rs = lockArr[i][j];
+              break;
+            }
+          }
+        }
+
+        return rs;
+      }
+    }
+  </script>
+</head>
+
+<body onload='init()'>
+  <canvas width='500' height='800' id='canvas' style='display:block;margin:0 auto'>
+
+  </canvas>
+</body>
+
+</html>
